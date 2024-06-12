@@ -7,6 +7,7 @@ public class FieldOfView : MonoBehaviour
 {
     [SerializeField] LayerMask layerMask;
     private Mesh mesh;
+    private Vector3 origin;
     private void Start()
     {
         mesh = new Mesh();
@@ -16,7 +17,7 @@ public class FieldOfView : MonoBehaviour
     private void Update()
     {
         float fov = 90;
-        Vector3 origin = Vector3.zero;
+        origin = Vector3.zero;
         int rayCount = 50;
         float angle = 0;
         float angleIncrease = fov / rayCount;
@@ -60,6 +61,25 @@ public class FieldOfView : MonoBehaviour
     {
         float angleRad = angle * (Mathf.PI / 180);
         return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
-        
+    }
+    private float GetAngleFromVectorFloat(Vector3 dir)
+    {
+        dir = dir.normalized;
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0)
+        {
+            n += 360;
+        }
+        return n;
+    }
+    private void SetOrigin(Vector3 origin)
+    {
+        this.origin = origin;
+    }
+    private void SetAimDirection(Vector3 aimDirection)
+    {
+        aimDirection.Normalize();
+        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        SetAimDirection(angle);
     }
 }
