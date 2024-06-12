@@ -80,6 +80,6 @@ public class FieldOfView : MonoBehaviour
     {
         aimDirection.Normalize();
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        SetAimDirection(angle);
+        // SetAimDirection(angle);
     }
 }
