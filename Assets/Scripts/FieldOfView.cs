@@ -58,6 +58,7 @@ public class FieldOfView : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.uv = uv;
+        mesh.bounds = new Bounds(origin, Vector3.one * 2000f);
     }
     
     private Vector3 GetVectorFromAngle(float angle)
