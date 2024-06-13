@@ -8,20 +8,23 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     private Mesh mesh;
     private Vector3 origin;
+    private float fov ;
+    private float startingAngle;
+    private float viewDistance;
     private void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        fov = 90;
+        origin = Vector3.zero;
+        viewDistance = 2.5f;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        float fov = 90;
-        origin = Vector3.zero;
         int rayCount = 50;
-        float angle = 0;
+        float angle = startingAngle;
         float angleIncrease = fov / rayCount;
-        float viewDistance = 2.5f;
         
         Vector3[] vertices = new Vector3[rayCount + 1 + 1];
         Vector2 [] uv = new Vector2[vertices.Length];
@@ -72,14 +75,21 @@ public class FieldOfView : MonoBehaviour
         }
         return n;
     }
-    private void SetOrigin(Vector3 origin)
-    {
+    public void SetOrigin(Vector3 origin)
+    { 
         this.origin = origin;
     }
-    private void SetAimDirection(Vector3 aimDirection)
+    public void SetAimDirection(Vector3 aimDirection)
     {
-        aimDirection.Normalize();
-        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        // SetAimDirection(angle);
+        startingAngle = GetAngleFromVectorFloat(aimDirection) - fov/2;
     }
+    public void SetFoV(float fov)
+    {
+        this.fov = fov;
+    }
+    public void SetViewDistance(float viewDistance)
+    {
+        this.viewDistance = viewDistance;
+    }
+    
 }
